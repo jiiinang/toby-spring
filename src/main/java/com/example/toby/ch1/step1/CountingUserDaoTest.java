@@ -5,11 +5,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.sql.SQLException;
 
-public class UserDaoTest {
+public class CountingUserDaoTest {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
 
-        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(CountingDaoFactory.class);
         UserDao dao = context.getBean("userDao", UserDao.class);
 
         User user = new User();
@@ -26,6 +26,10 @@ public class UserDaoTest {
         System.out.println(user2.getPassword());
 
         System.out.println(user2.getId() + " 조회 성공");
-    }
 
+        CountingConnectionMaker countingConnectionMaker = context.getBean("connectionMaker", CountingConnectionMaker.class);
+
+        System.out.println(countingConnectionMaker.getCount());
+
+    }
 }
